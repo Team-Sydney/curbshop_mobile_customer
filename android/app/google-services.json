@@ -7,17 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:699599394905:android:668007ab92aec983167948",
+        "mobilesdk_app_id": "1:699599394905:android:27c7d3471ae4821e167948",
         "android_client_info": {
-          "package_name": "com.teamsydney.customer"
+          "package_name": "com.teamsydney.shop_mobile_business"
         }
       },
       "oauth_client": [
         {
-          "client_id": "699599394905-de62ppsl96t98matj9j8u0fu6u7gi7q5.apps.googleusercontent.com",
+          "client_id": "699599394905-f5hol988mu3m5at95b43c2cthoh5ua60.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.teamsydney.customer",
+            "package_name": "com.teamsydney.shop_mobile_business",
             "certificate_hash": "6523f6beaa07a0d1f9dc713a4bb5e7ca1dd48a33"
           }
         },
@@ -42,7 +42,7 @@
               "client_id": "699599394905-i6lesbhl9jrgdj8tv13gbt7cl4osf69s.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.teamsydney.shopMobilecustomer"
+                "bundle_id": "com.teamsydney.shopMobileBusiness"
               }
             }
           ]
@@ -51,14 +51,14 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:699599394905:android:27c7d3471ae4821e167948",
+        "mobilesdk_app_id": "1:699599394905:android:39680e7b18300898167948",
         "android_client_info": {
           "package_name": "com.teamsydney.shop_mobile_customer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "699599394905-f5hol988mu3m5at95b43c2cthoh5ua60.apps.googleusercontent.com",
+          "client_id": "699599394905-hfu4723bcvjej64ja2k1270hnidgjdja.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.teamsydney.shop_mobile_customer",
@@ -86,7 +86,7 @@
               "client_id": "699599394905-i6lesbhl9jrgdj8tv13gbt7cl4osf69s.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.teamsydney.shopMobilecustomer"
+                "bundle_id": "com.teamsydney.shopMobileBusiness"
               }
             }
           ]

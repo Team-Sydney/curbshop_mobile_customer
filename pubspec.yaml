@@ -26,6 +26,7 @@ dependencies:
 
   sliding_up_panel: ^1.0.2
   flutter_slidable: ^0.5.7
+  google_sign_in: ^4.5.9
 
   # Firebase Dependancies
   firebase_core: ^0.4.0+9
