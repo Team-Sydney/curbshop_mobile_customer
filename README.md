@@ -1,4 +1,4 @@
-# shop_mobile_business
+# shop_mobile_customer
 
 A new Flutter project.
 
