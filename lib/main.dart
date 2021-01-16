@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shop_mobile_customer/widgets/cartItem.dart';
-import 'package:shop_mobile_customer/widgets/simpleButton.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:shop_mobile_customer/auth/auth.dart';
+import 'package:shop_mobile_customer/models/customerUser.dart';
 
 import 'package:shop_mobile_customer/pages/home.dart';
 import 'package:shop_mobile_customer/pages/login.dart';
@@ -48,32 +47,28 @@ class Root extends StatefulWidget {
 
 class _RootState extends State<Root> {
   FirebaseAuth auth = FirebaseAuth.instance;
-  PanelController panel = new PanelController();
 
-  AuthStatus status = AuthStatus.LOGGED_IN;
+  AuthStatus status = AuthStatus.NOT_DETERMINED;
   Widget page;
 
-  String buttonText;
-  VoidCallback buttonAction;
+  CustomerUser user;
 
   @override
   void initState() {
     super.initState();
 
-    buttonText = "0 items in your cart";
-    buttonAction = openPanel;
-
-    // auth.onAuthStateChanged.listen((FirebaseUser user) {
-    //   if (user == null) {
-    //     setState(() {
-    //       status = AuthStatus.NOT_LOGGED_IN;
-    //     });
-    //   } else {
-    //     setState(() {
-    //       status = AuthStatus.LOGGED_IN;
-    //     });
-    //   }
-    // });
+    auth.onAuthStateChanged.listen((FirebaseUser user) {
+      if (user == null) {
+        setState(() {
+          status = AuthStatus.NOT_LOGGED_IN;
+        });
+      } else {
+        setState(() {
+          status = AuthStatus.LOGGED_IN;
+          this.user = new CustomerUser(0, "0", "0", [], [], user);
+        });
+      }
+    });
   }
 
   @override
@@ -82,23 +77,22 @@ class _RootState extends State<Root> {
   }
 
   void loginCallback() async {
-    setState(() {
-      status = AuthStatus.LOGGED_IN;
-    });
+    Auth.signInWithGoogle()
+        .then((user) => {
+              setState(() {
+                this.user = user;
+                status = AuthStatus.LOGGED_IN;
+              })
+            })
+        .catchError((err) => print(err));
   }
 
   void logoutCallback() async {
-    setState(() {
-      status = AuthStatus.NOT_LOGGED_IN;
-    });
-  }
-
-  void openPanel() {
-    panel.open();
-  }
-
-  void checkout() {
-    print("CHECKOUT");
+    Auth.signOutGoogle().then((v) => {
+          setState(() {
+            status = AuthStatus.NOT_LOGGED_IN;
+          })
+        });
   }
 
   Widget buildWaiting() {
@@ -125,6 +119,7 @@ class _RootState extends State<Root> {
       case AuthStatus.LOGGED_IN:
         setState(() {
           page = Home(
+            user: this.user,
             logoutCallback: logoutCallback,
           );
         });
@@ -137,33 +132,6 @@ class _RootState extends State<Root> {
         });
         break;
     }
-    return new Scaffold(
-        body: SlidingUpPanel(
-      controller: panel,
-      onPanelClosed: () => setState(() {
-        buttonText = "0 items in your cart";
-        buttonAction = openPanel;
-      }),
-      onPanelOpened: () => setState(() {
-        buttonText = "Checkout";
-        buttonAction = checkout;
-      }),
-      backdropEnabled: true,
-      backdropOpacity: 0.25,
-      borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(15), topRight: Radius.circular(15)),
-      minHeight: 100.0,
-      maxHeight: MediaQuery.of(context).size.height / 2,
-      padding: EdgeInsets.only(left: 30, top: 20, right: 30, bottom: 20),
-      footer: Center(
-          child: SimpleButton(
-        text: buttonText,
-        onPress: buttonAction,
-      )),
-      panel: Container(
-          padding: EdgeInsets.only(bottom: 57),
-          child: ListView(padding: EdgeInsets.all(0), children: [CartItem()])),
-      body: page,
-    ));
+    return new Scaffold(body: page);
   }
 }
