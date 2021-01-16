@@ -22,6 +22,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return new SafeArea();
+    return new SafeArea(child: Text("HomePage"));
   }
 }
