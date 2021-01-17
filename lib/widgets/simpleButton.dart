@@ -10,7 +10,7 @@ class SimpleButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlatButton(
-        minWidth: 351.4,
+        minWidth: MediaQuery.of(context).size.width * 0.854,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
         padding: EdgeInsets.only(top: 14, bottom: 14),
         color: ThemeColors.black,
