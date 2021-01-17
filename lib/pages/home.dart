@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_mobile_customer/models/customerUser.dart';
 import 'package:shop_mobile_customer/themes/colors.dart';
+import 'package:shop_mobile_customer/widgets/quickViewShop.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import 'package:shop_mobile_customer/widgets/cartItem.dart';
@@ -46,79 +47,88 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return SlidingUpPanel(
-      controller: panel,
-      onPanelClosed: () => setState(() {
-        buttonText = "0 items in your cart";
-        buttonAction = openPanel;
-      }),
-      onPanelOpened: () => setState(() {
-        buttonText = "Checkout";
-        buttonAction = checkout;
-      }),
-      backdropEnabled: true,
-      backdropOpacity: 0.25,
-      borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(15), topRight: Radius.circular(15)),
-      minHeight: 100.0,
-      maxHeight: MediaQuery.of(context).size.height / 2,
-      padding: EdgeInsets.only(left: 30, top: 20, right: 30, bottom: 20),
-      footer: Center(
-          child: SimpleButton(
-        text: buttonText,
-        onPress: buttonAction,
-      )),
-      panel: Container(
-          padding: EdgeInsets.only(bottom: 57),
-          child: ListView(padding: EdgeInsets.all(0), children: [CartItem()])),
-      body: SafeArea(
-          child: Container(
-        padding: EdgeInsets.only(left: 30, top: 10, right: 30, bottom: 10),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                RichText(
-                  text: TextSpan(
-                      text: "curbshop",
-                      style: TextStyle(
-                          fontFamily: 'Quicksand',
-                          fontSize: 24,
-                          fontWeight: FontWeight.w700,
-                          color: ThemeColors.black),
-                      children: <TextSpan>[
-                        TextSpan(
-                            text: ".online",
-                            style: TextStyle(fontWeight: FontWeight.w400))
-                      ]),
-                ),
-                InkWell(
-                    onTap: widget.logoutCallback,
-                    child: CircleAvatar(
-                        backgroundImage:
-                            NetworkImage(widget.user.user.photoUrl)))
-              ],
-            ),
-            Container(
-                margin: EdgeInsets.only(top: 10),
-                padding: EdgeInsets.only(left: 14, right: 14),
-                decoration: BoxDecoration(
-                    color: ThemeColors.lightGrey,
-                    borderRadius: BorderRadius.circular(5)),
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: "Search anything",
-                    icon: Icon(Icons.search),
-                    border: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    enabledBorder: InputBorder.none,
-                    errorBorder: InputBorder.none,
-                    disabledBorder: InputBorder.none,
+        controller: panel,
+        onPanelClosed: () => setState(() {
+              buttonText = "0 items in your cart";
+              buttonAction = openPanel;
+            }),
+        onPanelOpened: () => setState(() {
+              buttonText = "Checkout";
+              buttonAction = checkout;
+            }),
+        backdropEnabled: true,
+        backdropOpacity: 0.25,
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(15), topRight: Radius.circular(15)),
+        minHeight: 100.0,
+        maxHeight: MediaQuery.of(context).size.height / 2,
+        padding: EdgeInsets.only(left: 30, top: 20, right: 30, bottom: 20),
+        footer: Center(
+            child: SimpleButton(
+          text: buttonText,
+          onPress: buttonAction,
+        )),
+        panel: Container(
+            padding: EdgeInsets.only(bottom: 57),
+            child:
+                ListView(padding: EdgeInsets.all(0), children: [CartItem()])),
+        body: SafeArea(
+            child: Container(
+                padding: EdgeInsets.only(top: 10),
+                child: Column(children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                          padding: EdgeInsets.only(left: 30, right: 30),
+                          child: RichText(
+                            text: TextSpan(
+                                text: "curbshop",
+                                style: TextStyle(
+                                    fontFamily: 'Quicksand',
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w700,
+                                    color: ThemeColors.black),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: ".online",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w400))
+                                ]),
+                          )),
+                      Container(
+                          padding: EdgeInsets.only(left: 30, right: 30),
+                          child: InkWell(
+                              onTap: widget.logoutCallback,
+                              child: CircleAvatar(
+                                  backgroundImage:
+                                      NetworkImage(widget.user.user.photoUrl))))
+                    ],
                   ),
-                ))
-          ],
-        ),
-      )),
-    );
+                  Container(
+                      margin: EdgeInsets.only(top: 10, left: 30, right: 30),
+                      padding: EdgeInsets.only(left: 14, right: 14),
+                      decoration: BoxDecoration(
+                          color: ThemeColors.lightGrey,
+                          borderRadius: BorderRadius.circular(5)),
+                      child: TextField(
+                          decoration: InputDecoration(
+                        hintText: "Search anything",
+                        icon: Icon(Icons.search),
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                      ))),
+                  Expanded(
+                      child: Container(
+                          padding: EdgeInsets.only(top: 10, bottom: 100),
+                          child: ListView.builder(
+                              itemCount: 10,
+                              itemBuilder: (context, int) {
+                                return QuickViewShop();
+                              })))
+                ]))));
   }
 }
