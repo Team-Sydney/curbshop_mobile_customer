@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shop_mobile_customer/auth/auth.dart';
+import 'package:shop_mobile_customer/custom/customScrollBehaviour.dart';
 import 'package:shop_mobile_customer/models/customerUser.dart';
 
 import 'package:shop_mobile_customer/pages/home.dart';
@@ -28,6 +29,12 @@ class ShopCustomer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        builder: (context, child) {
+          return ScrollConfiguration(
+            behavior: CustomScrollBehaviour(),
+            child: child,
+          );
+        },
         theme: ThemeData(
           backgroundColor: ThemeColors.black,
           canvasColor: ThemeColors.offWhite,
