@@ -14,7 +14,7 @@ class SimpleButton extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
         padding: EdgeInsets.only(top: 14, bottom: 14),
         color: ThemeColors.black,
-        onPressed: () => {this.onPress()},
+        onPressed: () => onPress(),
         child: Text(text,
             style: TextStyle(
                 color: Colors.white,

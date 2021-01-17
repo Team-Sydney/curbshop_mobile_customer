@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shop_mobile_customer/auth/auth.dart';
-import 'package:shop_mobile_customer/models/customerUser.dart';
 import 'package:shop_mobile_customer/widgets/simpleButton.dart';
 
 import '../themes/colors.dart';
@@ -49,7 +47,7 @@ class _LoginState extends State<Login> {
                             text: ".online",
                             style: TextStyle(fontWeight: FontWeight.w400)),
                         TextSpan(
-                            text: "\nsupport local businesses",
+                            text: "\nsupport local, thrive global",
                             style: TextStyle(
                                 fontSize: 14, fontWeight: FontWeight.w400))
                       ]),

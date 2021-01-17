@@ -70,10 +70,17 @@ class _RootState extends State<Root> {
           status = AuthStatus.NOT_LOGGED_IN;
         });
       } else {
-        setState(() {
-          status = AuthStatus.LOGGED_IN;
-          this.user = new CustomerUser(0, "0", "0", [], [], user);
-        });
+        Auth.getUserFromServer(user).then((customerUser) => {
+              if (customerUser != null)
+                {
+                  setState(() {
+                    status = AuthStatus.LOGGED_IN;
+                    this.user = customerUser;
+                  })
+                }
+              else
+                {status = AuthStatus.NOT_LOGGED_IN}
+            });
       }
     });
   }
@@ -96,6 +103,7 @@ class _RootState extends State<Root> {
 
   void logoutCallback() async {
     Auth.signOutGoogle().then((v) => {
+          Navigator.pop(context),
           setState(() {
             status = AuthStatus.NOT_LOGGED_IN;
           })
@@ -104,7 +112,7 @@ class _RootState extends State<Root> {
 
   Widget buildWaiting() {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: ThemeColors.offWhite,
     );
   }
 
