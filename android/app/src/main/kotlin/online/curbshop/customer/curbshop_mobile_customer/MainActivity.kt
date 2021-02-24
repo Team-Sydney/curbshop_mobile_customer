@@ -1,4 +1,4 @@
-package com.teamsydney.shop_mobile_customer
+package online.curbshop.customer.curbshop_mobile_customer
 
 import io.flutter.embedding.android.FlutterActivity
 
