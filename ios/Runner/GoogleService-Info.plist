@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>111200418682-ir5u31q0e693fs95mdfsp8jb0aukjukv.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.111200418682-ir5u31q0e693fs95mdfsp8jb0aukjukv</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>111200418682-e2da9pnn6esu0bbmkpm2q3qngu2hv9oe.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDeZS8k-g4QTTKG1LTH_Ur7yImWbpQxrLk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>111200418682</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>online.curbshop.customer</string>
+	<key>PROJECT_ID</key>
+	<string>curbshop-4d098</string>
+	<key>STORAGE_BUCKET</key>
+	<string>curbshop-4d098.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:111200418682:ios:5e38dd2ad6686e4170b4c3</string>
+</dict>
+</plist>

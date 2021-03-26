@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "111200418682",
+    "project_id": "curbshop-4d098",
+    "storage_bucket": "curbshop-4d098.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:111200418682:android:375c93dca37970a670b4c3",
+        "android_client_info": {
+          "package_name": "online.curbshop.customer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "111200418682-e2da9pnn6esu0bbmkpm2q3qngu2hv9oe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "online.curbshop.customer",
+            "certificate_hash": "22cf01c9e6e13ebec793252083520fc4143801f3"
+          }
+        },
+        {
+          "client_id": "111200418682-ussqcsdc5df1vk2jnfidb67j0svlu1n4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkcB7ISRWeIfYzhIXv7FvqZZKBHmHmeiU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "111200418682-ussqcsdc5df1vk2jnfidb67j0svlu1n4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
