@@ -1,20 +1,21 @@
 import 'package:curbshop_mobile_customer/backend/models/CartProduct.dart';
 import 'package:curbshop_mobile_customer/backend/models/Product.dart';
 import 'package:curbshop_mobile_customer/backend/models/Store.dart';
+import 'package:curbshop_mobile_customer/controllers/cartController.dart';
 import 'package:curbshop_mobile_customer/controllers/customPanelController.dart';
-import 'package:curbshop_mobile_customer/themes/themeColors.dart';
-import 'package:curbshop_mobile_customer/widgets/cartItem.dart';
 import 'package:curbshop_mobile_customer/widgets/featuredItem.dart';
 import 'package:curbshop_mobile_customer/widgets/header.dart';
 import 'package:curbshop_mobile_customer/widgets/inputField.dart';
-import 'package:curbshop_mobile_customer/widgets/primaryButton.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
   final CustomPanelController customPanelController;
+  final CartController cartController;
 
-  const HomePage({Key key, @required this.customPanelController})
+  const HomePage(
+      {Key key,
+      @required this.customPanelController,
+      @required this.cartController})
       : super(key: key);
 
   @override
@@ -22,14 +23,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomeState extends State<HomePage> {
-  List<CartProduct> cartItems;
   List<Product> featuredItems;
+  List<CartProduct> inCart;
 
   @override
   void initState() {
     super.initState();
 
-    cartItems = [];
+    inCart = [];
+    widget.cartController.cartStream.listen((products) {
+      setState(() {
+        this.inCart = products;
+      });
+    });
+
     featuredItems = [];
     featuredItems.addAll([
       Product(
@@ -70,52 +77,10 @@ class _HomeState extends State<HomePage> {
                 title: "curbshop",
                 circleImage: NetworkImage(
                     "https://iso.500px.com/wp-content/uploads/2015/03/business_cover.jpeg"),
-                iconButton: (cartItems.length > 0
+                iconButton: (inCart.length > 0
                     ? Icons.shopping_bag
                     : Icons.shopping_bag_outlined),
                 iconOnPressed: () {
-                  widget.customPanelController.panelContentController
-                      .add(Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Cart",
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.poppins(
-                            color: ThemeColors.title,
-                            fontSize: 32,
-                            fontWeight: FontWeight.w700,
-                            letterSpacing: 1,
-                            height: 1.1),
-                      ),
-                      Expanded(
-                          child: Container(
-                              margin: EdgeInsets.only(top: 20, bottom: 20),
-                              child: ListView.builder(
-                                  itemCount: cartItems.length,
-                                  itemBuilder: (context, index) {
-                                    return CartItem(
-                                      cartProduct: cartItems[index],
-                                      incremented: (value, product) {
-                                        setState(() {
-                                          cartItems[index].quantity = value;
-                                        });
-                                      },
-                                      decremented: (value, cartProduct) {
-                                        setState(() {
-                                          if (value < 1) {
-                                            cartItems.removeAt(index);
-                                            cartProduct.product.inCart = false;
-                                          } else
-                                            cartItems[index].quantity = value;
-                                        });
-                                      },
-                                    );
-                                  }))),
-                      PrimaryButton(onPressed: () {}, label: "Checkout")
-                    ],
-                  ));
                   widget.customPanelController.openPanel();
                 },
                 imageOnPressed: () => widget.customPanelController.openPanel()),
@@ -140,9 +105,10 @@ class _HomeState extends State<HomePage> {
                     product.inCart = !product.inCart;
 
                     if (product.inCart)
-                      cartItems.add(CartProduct(product.pricePer, product));
+                      widget.cartController
+                          .add(CartProduct(product.pricePer, product));
                     else
-                      cartItems.removeWhere((item) => item.product == product);
+                      widget.cartController.remove(product: product);
                   });
                 },
                 wishlistOnPress: (product) {

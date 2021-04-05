@@ -9,15 +9,9 @@ class CustomPanelController {
   StreamController<bool> _panelEventsController;
   Stream<bool> panelEvents;
 
-  StreamController<Widget> panelContentController;
-  Stream<Widget> panelContent;
-
   CustomPanelController(this.panelController) {
     _panelEventsController = StreamController<bool>();
     panelEvents = _panelEventsController.stream;
-
-    panelContentController = StreamController<Widget>();
-    panelContent = panelContentController.stream;
   }
 
   void hidePanel() async {

@@ -1,3 +1,4 @@
+import 'package:curbshop_mobile_customer/controllers/cartController.dart';
 import 'package:curbshop_mobile_customer/controllers/customPanelController.dart';
 import 'package:curbshop_mobile_customer/pages/home.dart';
 import 'package:curbshop_mobile_customer/pages/login.dart';
@@ -6,6 +7,7 @@ import 'package:curbshop_mobile_customer/pages/onboarding/onboardVehicle.dart';
 import 'package:curbshop_mobile_customer/pages/onboarding/onboardVerify.dart';
 import 'package:curbshop_mobile_customer/pages/onboarding/onboardWelcome.dart';
 import 'package:curbshop_mobile_customer/themes/themeColors.dart';
+import 'package:curbshop_mobile_customer/widgets/cartPopup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -48,21 +50,17 @@ class _RootState extends State<Root> {
 
   PanelController _panelController = PanelController();
   CustomPanelController _customPanelController;
+  CartController _cartController;
 
   Widget _page;
-  Widget _panelContent;
 
   @override
   void initState() {
     super.initState();
 
     _customPanelController = CustomPanelController(_panelController);
+    _cartController = CartController();
     _firebaseAuth.onAuthStateChanged.listen((FirebaseUser user) {});
-    _customPanelController.panelContent.listen((event) {
-      setState(() {
-        this._panelContent = event;
-      });
-    });
   }
 
   @override
@@ -85,6 +83,7 @@ class _RootState extends State<Root> {
         setState(() {
           _page = HomePage(
             customPanelController: _customPanelController,
+            cartController: _cartController,
           );
         });
         break;
@@ -121,12 +120,10 @@ class _RootState extends State<Root> {
             _customPanelController.updateStream(isPanelOpen: false),
         panel: SafeArea(
             child: Container(
-          padding: EdgeInsets.only(
-              left: 24,
-              top: MediaQuery.of(context).size.height * 0.005,
-              right: 24,
-              bottom: MediaQuery.of(context).size.height * 0.005),
-          child: _panelContent,
+          padding: EdgeInsets.only(left: 24, right: 24),
+          child: CartPopup(
+            cartController: _cartController,
+          ),
           // child: OnboardVehicle(customPanelController: _customPanelController),
         )),
         body: SafeArea(

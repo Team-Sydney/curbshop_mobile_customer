@@ -17,14 +17,17 @@ class IncrementStepper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: [
-      IconButton(
-          icon: Icon((value > 1 ? Icons.remove : Icons.delete_outline)),
-          onPressed: () => decremented(this.value - this.incrementBy)),
-      Text(this.value.toString(), style: GoogleFonts.poppins()),
-      IconButton(
-          icon: Icon(Icons.add),
-          onPressed: () => incremented(this.value + this.incrementBy))
-    ]);
+    return Container(
+        width: 118,
+        child: Row(children: [
+          IconButton(
+              icon: Icon(
+                  (value > incrementBy ? Icons.remove : Icons.delete_outline)),
+              onPressed: () => decremented(this.value - this.incrementBy)),
+          Text(this.value.toString(), style: GoogleFonts.poppins()),
+          IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () => incremented(this.value + this.incrementBy))
+        ]));
   }
 }

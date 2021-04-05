@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 import 'package:curbshop_mobile_customer/backend/models/CartProduct.dart';
 import 'package:curbshop_mobile_customer/themes/themeColors.dart';
 import 'package:curbshop_mobile_customer/widgets/incrementStepper.dart';
@@ -14,6 +16,7 @@ class CartItem extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final formatCurrency = NumberFormat.simpleCurrency();
     return Container(
       width: MediaQuery.of(context).size.width,
       child: Card(
@@ -34,7 +37,7 @@ class CartItem extends StatelessWidget {
                     image: cartProduct.product.image, fit: BoxFit.contain),
               ),
               Container(
-                  width: 125,
+                  width: 110,
                   margin: EdgeInsets.only(left: 16),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -43,7 +46,7 @@ class CartItem extends StatelessWidget {
                       Text(this.cartProduct.product.name,
                           style: GoogleFonts.poppins()),
                       Text(
-                        "\$${this.cartProduct.product.price}",
+                        "${formatCurrency.format(this.cartProduct.product.price * (this.cartProduct.quantity / this.cartProduct.product.pricePer))}",
                         style: GoogleFonts.poppins(
                             color: ThemeColors.title,
                             fontSize: 18,
