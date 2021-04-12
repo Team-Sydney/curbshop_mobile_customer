@@ -31,22 +31,22 @@ class ThemeColors {
 
 class Primary {
   /// #5F2EEA
-  static Color normal = Color.fromRGBO(95, 46, 234, 1.0);
+  Color normal = Color.fromRGBO(95, 46, 234, 1.0);
 
   /// #2A00A2
-  static Color dark = Color.fromRGBO(42, 0, 162, 1.0);
+  Color dark = Color.fromRGBO(42, 0, 162, 1.0);
 
   /// #BCA4FF
-  static Color darkMode = Color.fromRGBO(188, 164, 255, 1.0);
+  Color darkMode = Color.fromRGBO(188, 164, 255, 1.0);
 }
 
 class Secondary {
   /// #1CC8EE
-  static Color normal = Color.fromRGBO(28, 200, 238, 1.0);
+  Color normal = Color.fromRGBO(28, 200, 238, 1.0);
 
   /// #0096B7
-  static Color dark = Color.fromRGBO(0, 150, 183, 1.0);
+  Color dark = Color.fromRGBO(0, 150, 183, 1.0);
 
   /// #82E9FF
-  static Color darkMode = Color.fromRGBO(130, 233, 255, 1.0);
+  Color darkMode = Color.fromRGBO(130, 233, 255, 1.0);
 }

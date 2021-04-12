@@ -22,7 +22,7 @@ class FeaturedItem extends StatelessWidget {
       child: Card(
           clipBehavior: Clip.antiAlias,
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
           child: Container(
             padding: EdgeInsets.all(12.5),
             child:
@@ -33,7 +33,7 @@ class FeaturedItem extends StatelessWidget {
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
                       color: Color.fromRGBO(243, 243, 243, 1.0),
-                      borderRadius: BorderRadius.circular(24)),
+                      borderRadius: BorderRadius.circular(16)),
                   child: Image(image: this.product.image, fit: BoxFit.contain)),
               Expanded(
                   child: Container(
