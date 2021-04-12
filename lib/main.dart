@@ -1,11 +1,9 @@
+import 'package:curbshop_mobile_customer/backend/auth/Auth.dart';
+import 'package:curbshop_mobile_customer/backend/models/Customer.dart';
 import 'package:curbshop_mobile_customer/controllers/cartController.dart';
 import 'package:curbshop_mobile_customer/controllers/customPanelController.dart';
 import 'package:curbshop_mobile_customer/pages/home.dart';
 import 'package:curbshop_mobile_customer/pages/login.dart';
-import 'package:curbshop_mobile_customer/pages/onboarding/onboardNumber.dart';
-import 'package:curbshop_mobile_customer/pages/onboarding/onboardVehicle.dart';
-import 'package:curbshop_mobile_customer/pages/onboarding/onboardVerify.dart';
-import 'package:curbshop_mobile_customer/pages/onboarding/onboardWelcome.dart';
 import 'package:curbshop_mobile_customer/themes/themeColors.dart';
 import 'package:curbshop_mobile_customer/widgets/cartPopup.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +44,7 @@ class Root extends StatefulWidget {
 
 class _RootState extends State<Root> {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  AuthStates _authState = AuthStates.LOGGED_IN;
+  AuthStates _authState = AuthStates.UNKNOWN;
 
   PanelController _panelController = PanelController();
   CustomPanelController _customPanelController;
@@ -54,13 +52,36 @@ class _RootState extends State<Root> {
 
   Widget _page;
 
+  Customer currentCustomer;
+
   @override
   void initState() {
     super.initState();
 
     _customPanelController = CustomPanelController(_panelController);
     _cartController = CartController();
-    _firebaseAuth.onAuthStateChanged.listen((FirebaseUser user) {});
+    _firebaseAuth.onAuthStateChanged.listen((FirebaseUser user) {
+      // print('User: $user');
+      if (user != null) {
+        Auth.getUserFromServer(user).then((customer) {
+          // print('Customer: $customer');
+          if (customer != null) {
+            setState(() {
+              this.currentCustomer = customer;
+              this._authState = AuthStates.LOGGED_IN;
+            });
+          } else {
+            setState(() {
+              this._authState = AuthStates.LOGGED_OUT;
+            });
+          }
+        });
+      } else {
+        setState(() {
+          this._authState = AuthStates.LOGGED_OUT;
+        });
+      }
+    });
   }
 
   @override
@@ -68,9 +89,13 @@ class _RootState extends State<Root> {
     super.dispose();
   }
 
-  void loginCallback() async {}
+  void loginCallback() async {
+    Auth.signInWithGoogle();
+  }
 
-  void logoutCallback() async {}
+  void logoutCallback() async {
+    Auth.signOutGoogle();
+  }
 
   Widget buildWaiting() {
     return Center(child: CircularProgressIndicator.adaptive());
@@ -82,8 +107,10 @@ class _RootState extends State<Root> {
       case AuthStates.LOGGED_IN:
         setState(() {
           _page = HomePage(
-            customPanelController: _customPanelController,
-            cartController: _cartController,
+            currentCustomer: this.currentCustomer,
+            logoutCallback: this.logoutCallback,
+            customPanelController: this._customPanelController,
+            cartController: this._cartController,
           );
         });
         break;
@@ -91,7 +118,8 @@ class _RootState extends State<Root> {
       case AuthStates.LOGGED_OUT:
         setState(() {
           _page = LoginPage(
-            customPanelController: _customPanelController,
+            customPanelController: this._customPanelController,
+            loginCallback: this.loginCallback,
           );
         });
         break;
