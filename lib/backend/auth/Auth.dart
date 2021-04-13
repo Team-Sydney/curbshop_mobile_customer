@@ -91,6 +91,6 @@ class Auth {
   }
 
   static Future<void> signOutGoogle() async {
-    await googleSignIn.signOut();
+    await _auth.signOut();
   }
 }
