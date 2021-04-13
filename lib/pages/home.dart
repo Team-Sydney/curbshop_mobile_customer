@@ -4,7 +4,6 @@ import 'package:curbshop_mobile_customer/backend/models/Product.dart';
 import 'package:curbshop_mobile_customer/backend/models/Store.dart';
 import 'package:curbshop_mobile_customer/controllers/cartController.dart';
 import 'package:curbshop_mobile_customer/controllers/customPanelController.dart';
-import 'package:curbshop_mobile_customer/themes/themeColors.dart';
 import 'package:curbshop_mobile_customer/widgets/featuredItem.dart';
 import 'package:curbshop_mobile_customer/widgets/header.dart';
 import 'package:curbshop_mobile_customer/widgets/inputField.dart';
