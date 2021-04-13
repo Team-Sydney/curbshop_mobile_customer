@@ -19,7 +19,8 @@ class IncrementStepper extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         width: 118,
-        child: Row(children: [
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           IconButton(
               icon: Icon(
                   (value > incrementBy ? Icons.remove : Icons.delete_outline)),

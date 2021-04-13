@@ -34,7 +34,7 @@ class _LoginState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.only(left: 20, top: 20, right: 20),
+        padding: EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 8),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,

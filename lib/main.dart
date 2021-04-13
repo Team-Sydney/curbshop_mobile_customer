@@ -148,7 +148,7 @@ class _RootState extends State<Root> {
             _customPanelController.updateStream(isPanelOpen: false),
         panel: SafeArea(
             child: Container(
-          padding: EdgeInsets.only(left: 24, right: 24),
+          padding: EdgeInsets.only(left: 18, right: 18, bottom: 16),
           child: CartPopup(
             cartController: _cartController,
           ),
