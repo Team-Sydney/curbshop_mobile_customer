@@ -1,47 +1,37 @@
+import 'package:curbshop_mobile_customer/backend/auth/Auth.dart';
+import 'package:curbshop_mobile_customer/backend/models/Customer.dart';
+import 'package:curbshop_mobile_customer/controllers/cartController.dart';
+import 'package:curbshop_mobile_customer/controllers/customPanelController.dart';
+import 'package:curbshop_mobile_customer/pages/home.dart';
+import 'package:curbshop_mobile_customer/pages/login.dart';
+import 'package:curbshop_mobile_customer/themes/themeColors.dart';
+import 'package:curbshop_mobile_customer/widgets/cartPopup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shop_mobile_customer/auth/auth.dart';
-import 'package:shop_mobile_customer/custom/customScrollBehaviour.dart';
-import 'package:shop_mobile_customer/models/customerUser.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-import 'package:shop_mobile_customer/pages/home.dart';
-import 'package:shop_mobile_customer/pages/login.dart';
-import 'package:shop_mobile_customer/themes/colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
-    runApp(new ShopCustomer());
+    runApp(new App());
   });
 }
 
-enum AuthStatus {
-  NOT_DETERMINED,
-  NOT_LOGGED_IN,
-  LOGGED_IN,
-}
-
-class ShopCustomer extends StatelessWidget {
+class App extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        builder: (context, child) {
-          return ScrollConfiguration(
-            behavior: CustomScrollBehaviour(),
-            child: child,
-          );
-        },
-        theme: ThemeData(
-          backgroundColor: ThemeColors.black,
-          canvasColor: ThemeColors.offWhite,
-          fontFamily: 'Quicksand',
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        home: Root());
+      title: 'Curbshop Customer',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: Root(),
+    );
   }
 }
 
@@ -53,34 +43,43 @@ class Root extends StatefulWidget {
 }
 
 class _RootState extends State<Root> {
-  FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  AuthStates _authState = AuthStates.UNKNOWN;
 
-  AuthStatus status = AuthStatus.NOT_DETERMINED;
-  Widget page;
+  PanelController _panelController = PanelController();
+  CustomPanelController _customPanelController;
+  CartController _cartController;
 
-  CustomerUser user;
+  Widget _page;
+
+  Customer currentCustomer;
 
   @override
   void initState() {
     super.initState();
 
-    auth.onAuthStateChanged.listen((FirebaseUser user) {
-      if (user == null) {
-        setState(() {
-          status = AuthStatus.NOT_LOGGED_IN;
+    _customPanelController = CustomPanelController(_panelController);
+    _cartController = CartController();
+    _firebaseAuth.onAuthStateChanged.listen((FirebaseUser user) {
+      // print('User: $user');
+      if (user != null) {
+        Auth.getUserFromServer(user).then((customer) {
+          // print('Customer: $customer');
+          if (customer != null) {
+            setState(() {
+              this.currentCustomer = customer;
+              this._authState = AuthStates.LOGGED_IN;
+            });
+          } else {
+            setState(() {
+              this._authState = AuthStates.LOGGED_OUT;
+            });
+          }
         });
       } else {
-        Auth.getUserFromServer(user).then((customerUser) => {
-              if (customerUser != null)
-                {
-                  setState(() {
-                    status = AuthStatus.LOGGED_IN;
-                    this.user = customerUser;
-                  })
-                }
-              else
-                {status = AuthStatus.NOT_LOGGED_IN}
-            });
+        setState(() {
+          this._authState = AuthStates.LOGGED_OUT;
+        });
       }
     });
   }
@@ -91,62 +90,76 @@ class _RootState extends State<Root> {
   }
 
   void loginCallback() async {
-    Auth.signInWithGoogle()
-        .then((user) => {
-              setState(() {
-                this.user = user;
-                status = AuthStatus.LOGGED_IN;
-              })
-            })
-        .catchError((err) => print(err));
+    Auth.signInWithGoogle();
   }
 
   void logoutCallback() async {
-    Auth.signOutGoogle().then((v) => {
-          Navigator.pop(context),
-          setState(() {
-            status = AuthStatus.NOT_LOGGED_IN;
-          })
-        });
+    Auth.signOutGoogle();
   }
 
   Widget buildWaiting() {
-    return Scaffold(
-      backgroundColor: ThemeColors.offWhite,
-    );
+    return Center(child: CircularProgressIndicator.adaptive());
   }
 
   @override
   Widget build(BuildContext context) {
-    switch (status) {
-      case AuthStatus.NOT_DETERMINED:
+    switch (_authState) {
+      case AuthStates.LOGGED_IN:
         setState(() {
-          page = buildWaiting();
-        });
-        break;
-      case AuthStatus.NOT_LOGGED_IN:
-        setState(() {
-          page = Login(
-            loginCallback: loginCallback,
+          _page = HomePage(
+            currentCustomer: this.currentCustomer,
+            logoutCallback: this.logoutCallback,
+            customPanelController: this._customPanelController,
+            cartController: this._cartController,
           );
         });
         break;
-      case AuthStatus.LOGGED_IN:
+
+      case AuthStates.LOGGED_OUT:
         setState(() {
-          page = Home(
-            user: this.user,
-            logoutCallback: logoutCallback,
+          _page = LoginPage(
+            customPanelController: this._customPanelController,
+            loginCallback: this.loginCallback,
           );
         });
         break;
-      default:
+
+      case AuthStates.UNKNOWN:
         setState(() {
-          page = Login(
-            loginCallback: loginCallback,
-          );
+          _page = buildWaiting();
         });
         break;
     }
-    return new Scaffold(body: page);
+    return Scaffold(
+      backgroundColor: ThemeColors.background,
+      body: SlidingUpPanel(
+        controller: _panelController,
+        color: ThemeColors.offWhite,
+        maxHeight: MediaQuery.of(context).size.height / 1.5,
+        minHeight: 0,
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(24), topRight: Radius.circular(24)),
+        backdropEnabled: true,
+        backdropColor: ThemeColors.title,
+        backdropOpacity: 0.25,
+        onPanelOpened: () =>
+            _customPanelController.updateStream(isPanelOpen: true),
+        onPanelClosed: () =>
+            _customPanelController.updateStream(isPanelOpen: false),
+        panel: SafeArea(
+            child: Container(
+          padding: EdgeInsets.only(left: 18, right: 18, bottom: 16),
+          child: CartPopup(
+            cartController: _cartController,
+          ),
+          // child: OnboardVehicle(customPanelController: _customPanelController),
+        )),
+        body: SafeArea(
+          child: _page,
+        ),
+      ),
+    );
   }
 }
+
+enum AuthStates { UNKNOWN, LOGGED_IN, LOGGED_OUT }

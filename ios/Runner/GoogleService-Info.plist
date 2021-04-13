@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>699599394905-qdcrm276c6h6t19q4dveiijm7fj888n5.apps.googleusercontent.com</string>
+	<string>111200418682-ir5u31q0e693fs95mdfsp8jb0aukjukv.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.699599394905-qdcrm276c6h6t19q4dveiijm7fj888n5</string>
+	<string>com.googleusercontent.apps.111200418682-ir5u31q0e693fs95mdfsp8jb0aukjukv</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>699599394905-de62ppsl96t98matj9j8u0fu6u7gi7q5.apps.googleusercontent.com</string>
+	<string>111200418682-e2da9pnn6esu0bbmkpm2q3qngu2hv9oe.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCDr_kCkE5K7O9f0FcOS9XvUOEl7C2hJmQ</string>
+	<string>AIzaSyDeZS8k-g4QTTKG1LTH_Ur7yImWbpQxrLk</string>
 	<key>GCM_SENDER_ID</key>
-	<string>699599394905</string>
+	<string>111200418682</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.teamsydney.shopMobileCustomer</string>
+	<string>online.curbshop.customer</string>
 	<key>PROJECT_ID</key>
-	<string>shop-team-sydney</string>
+	<string>curbshop-4d098</string>
 	<key>STORAGE_BUCKET</key>
-	<string>shop-team-sydney.appspot.com</string>
+	<string>curbshop-4d098.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:699599394905:ios:195d5b45b2e577de167948</string>
+	<string>1:111200418682:ios:5e38dd2ad6686e4170b4c3</string>
 </dict>
 </plist>

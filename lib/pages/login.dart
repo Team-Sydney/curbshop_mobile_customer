@@ -1,18 +1,26 @@
+import 'package:curbshop_mobile_customer/controllers/customPanelController.dart';
+import 'package:curbshop_mobile_customer/widgets/appTitle.dart';
+import 'package:curbshop_mobile_customer/widgets/iconButton.dart';
+import 'package:curbshop_mobile_customer/widgets/loginButtonGroup.dart';
+import 'package:curbshop_mobile_customer/widgets/undrawIllustration.dart';
 import 'package:flutter/material.dart';
-import 'package:shop_mobile_customer/widgets/simpleButton.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
-import '../themes/colors.dart';
+class LoginPage extends StatefulWidget {
+  const LoginPage(
+      {Key key,
+      @required this.customPanelController,
+      @required this.loginCallback})
+      : super(key: key);
 
-class Login extends StatefulWidget {
-  Login({Key key, @required this.loginCallback}) : super(key: key);
-
-  final VoidCallback loginCallback;
+  final CustomPanelController customPanelController;
+  final Function loginCallback;
 
   @override
   _LoginState createState() => _LoginState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
@@ -25,38 +33,28 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return new SafeArea(
-        child: Container(
-            padding: EdgeInsets.only(left: 30, right: 30, bottom: 30, top: 200),
-            child: SizedBox.expand(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                      text: "curbshop",
-                      style: TextStyle(
-                          fontFamily: 'Quicksand',
-                          color: ThemeColors.black,
-                          fontSize: 32,
-                          fontWeight: FontWeight.w700),
-                      children: <TextSpan>[
-                        TextSpan(
-                            text: ".online",
-                            style: TextStyle(fontWeight: FontWeight.w400)),
-                        TextSpan(
-                            text: "\nsupport local, thrive global",
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w400))
-                      ]),
-                ),
-                SimpleButton(
-                  text: "Continue",
-                  onPress: widget.loginCallback,
-                )
-              ],
-            ))));
+    return Container(
+        padding: EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 8),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            AppTitle(
+              title: "curbshop",
+              domain: ".online",
+            ),
+            UndrawIllustration(name: "undraw_shopping", ext: "png"),
+            LoginButtonGroup(label: "Sign in with", children: [
+              IconSecondaryButton(
+                  onPressed: () => widget.loginCallback(),
+                  label: "Apple ID",
+                  icon: FlutterIcons.apple1_ant),
+              IconSecondaryButton(
+                  onPressed: () => widget.loginCallback(),
+                  label: "Google",
+                  icon: FlutterIcons.google_ant)
+            ])
+          ],
+        ));
   }
 }

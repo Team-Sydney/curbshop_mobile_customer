@@ -1,4 +1,4 @@
-# shop_mobile_customer
+# curbshop_mobile_customer
 
 A new Flutter project.
 
