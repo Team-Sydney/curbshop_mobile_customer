@@ -1,7 +1,7 @@
 import 'package:curbshop_mobile_customer/backend/models/CartProduct.dart';
 import 'package:curbshop_mobile_customer/controllers/cartController.dart';
 import 'package:curbshop_mobile_customer/themes/themeColors.dart';
-import 'package:curbshop_mobile_customer/widgets/cartItem.dart';
+import 'package:curbshop_mobile_customer/widgets/cartWidgets/cartItem.dart';
 import 'package:curbshop_mobile_customer/widgets/primaryButton.dart';
 import 'package:curbshop_mobile_customer/widgets/undrawIllustration.dart';
 import 'package:flutter/material.dart';

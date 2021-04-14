@@ -1,7 +1,7 @@
 import 'package:curbshop_mobile_customer/controllers/customPanelController.dart';
-import 'package:curbshop_mobile_customer/widgets/appTitle.dart';
+import 'package:curbshop_mobile_customer/widgets/loginWidgets/appTitle.dart';
 import 'package:curbshop_mobile_customer/widgets/iconButton.dart';
-import 'package:curbshop_mobile_customer/widgets/loginButtonGroup.dart';
+import 'package:curbshop_mobile_customer/widgets/loginWidgets/loginButtonGroup.dart';
 import 'package:curbshop_mobile_customer/widgets/undrawIllustration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';

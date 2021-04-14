@@ -4,10 +4,13 @@ import 'package:curbshop_mobile_customer/backend/models/Product.dart';
 import 'package:curbshop_mobile_customer/backend/models/Store.dart';
 import 'package:curbshop_mobile_customer/controllers/cartController.dart';
 import 'package:curbshop_mobile_customer/controllers/customPanelController.dart';
-import 'package:curbshop_mobile_customer/widgets/featuredItem.dart';
-import 'package:curbshop_mobile_customer/widgets/header.dart';
+import 'package:curbshop_mobile_customer/pages/orders.dart';
+import 'package:curbshop_mobile_customer/pages/settings.dart';
+import 'package:curbshop_mobile_customer/pages/wishlist.dart';
+import 'package:curbshop_mobile_customer/widgets/homeWidgets/featuredItem.dart';
+import 'package:curbshop_mobile_customer/widgets/homeWidgets/header.dart';
 import 'package:curbshop_mobile_customer/widgets/inputField.dart';
-import 'package:curbshop_mobile_customer/widgets/popupMenu.dart';
+import 'package:curbshop_mobile_customer/widgets/homeWidgets/popupMenu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
@@ -52,21 +55,30 @@ class _HomeState extends State<HomePage> {
           name: "Cotton Sweater",
           store: new Store(name: "Mary's Homemade Sweaters"),
           price: 28.99,
-          image: NetworkImage(
-              "https://i.pinimg.com/originals/f2/9e/da/f29edab5463bab46d0312807906ecbc8.png")),
+          image: ResizeImage(
+              NetworkImage(
+                  "https://i.pinimg.com/originals/f2/9e/da/f29edab5463bab46d0312807906ecbc8.png"),
+              width: 285,
+              height: 262)),
       Product(
           name: "Various Donuts",
           store: new Store(name: "Dave's Donuts"),
           price: 6.98,
           pricePer: 12,
-          image: NetworkImage(
-              "https://i.pinimg.com/originals/95/59/60/955960ca32b06e1a416dc678f48210bf.png")),
+          image: ResizeImage(
+              NetworkImage(
+                  "https://i.pinimg.com/originals/95/59/60/955960ca32b06e1a416dc678f48210bf.png"),
+              width: 285,
+              height: 262)),
       Product(
           name: "Vans MoMA ComfyCrush",
           store: new Store(name: "Foot Locker"),
           price: 99.98,
-          image: NetworkImage(
-              "https://images.vans.com/is/image/VansBrand/f20-moma-product-moma-era?wid=500&fmt=png-alpha")),
+          image: ResizeImage(
+              NetworkImage(
+                  "https://images.vans.com/is/image/VansBrand/f20-moma-product-moma-era?wid=500&fmt=png-alpha"),
+              width: 285,
+              height: 262)),
     ]);
   }
 
@@ -94,7 +106,9 @@ class _HomeState extends State<HomePage> {
                       amountInCart: inCart.length,
                       iconOnPressed: () =>
                           widget.customPanelController.openPanel(),
-                      imageOnPressed: () => this.showMenu = !this.showMenu),
+                      imageOnPressed: () => setState(() {
+                            this.showMenu = !this.showMenu;
+                          })),
                   InputField(
                     label: "Search",
                     icon: Icons.search,
@@ -135,22 +149,35 @@ class _HomeState extends State<HomePage> {
       ]),
       PopupMenu(
         showMenu: this.showMenu,
-        imageOnPressed: () => setState(() {
-          this.showMenu = !this.showMenu;
-        }),
-        circleImage: NetworkImage(widget.currentCustomer.user.photoUrl),
-        title: widget.currentCustomer.user.displayName.split(' ')[0].trim(),
         menuItems: [
           CustomPopupMenuItem(
-              onPressed: () {},
+              onPressed: () => {
+                    setState(() {
+                      this.showMenu = !this.showMenu;
+                    }),
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => WishlistPage()))
+                  },
               icon: Icons.favorite_border,
               label: "Wishlisted"),
           CustomPopupMenuItem(
-              onPressed: () {},
+              onPressed: () => {
+                    setState(() {
+                      this.showMenu = !this.showMenu;
+                    }),
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => OrdersPage()))
+                  },
               icon: FlutterIcons.package_fea,
               label: "Orders"),
           CustomPopupMenuItem(
-              onPressed: () {},
+              onPressed: () => {
+                    setState(() {
+                      this.showMenu = !this.showMenu;
+                    }),
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => SettingsPage()))
+                  },
               icon: Icons.settings_outlined,
               label: "Settings"),
           CustomPopupMenuItem(

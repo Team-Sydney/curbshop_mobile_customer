@@ -18,44 +18,16 @@ class CustomPopupMenuItem {
 class PopupMenu extends StatelessWidget {
   PopupMenu({
     Key key,
-    @required this.imageOnPressed,
-    @required this.circleImage,
-    @required this.title,
     @required this.showMenu,
     this.menuItems = const [],
   }) : super(key: key);
 
-  final Function imageOnPressed;
-  final ImageProvider<Object> circleImage;
-  final String title;
   final bool showMenu;
   final List<CustomPopupMenuItem> menuItems;
 
   @override
   Widget build(BuildContext context) {
     List<Widget> popMenuItems = [];
-    popMenuItems.add(Container(
-        padding: EdgeInsets.only(right: 14),
-        margin: EdgeInsets.only(bottom: 8),
-        child:
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          InkWell(
-              borderRadius: BorderRadius.circular(50),
-              onTap: this.imageOnPressed,
-              child: Container(
-                width: 56,
-                height: 56,
-                padding: EdgeInsets.all(4),
-                child: CircleAvatar(
-                    backgroundColor: ThemeColors.background,
-                    foregroundImage: this.circleImage),
-              )),
-          Text(this.title,
-              style: GoogleFonts.poppins(
-                  color: ThemeColors.title,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600))
-        ])));
     this.menuItems.forEach((item) {
       popMenuItems.add(Container(
           margin: EdgeInsets.only(top: 2),
@@ -77,14 +49,14 @@ class PopupMenu extends StatelessWidget {
               ),
               child: Stack(children: [
                 Align(
-                    alignment: Alignment.centerLeft,
+                    alignment: Alignment.centerRight,
                     child: Icon(
                       item.icon,
                       color:
                           (item.color != null ? item.color : ThemeColors.body),
                     )),
                 Align(
-                    alignment: Alignment.centerRight,
+                    alignment: Alignment.centerLeft,
                     child: Text(
                       item.label,
                       style: GoogleFonts.poppins(
@@ -104,10 +76,8 @@ class PopupMenu extends StatelessWidget {
             duration: Duration(milliseconds: 100),
             child: Container(
                 width: MediaQuery.of(context).size.width / 2,
-                height: ((popMenuItems.length * 56.0) +
-                        (popMenuItems.length * 2.0)) +
-                    30.0,
-                margin: EdgeInsets.only(left: 8, top: 8, right: 8),
+                height: (popMenuItems.length * 56.0) + 32.0,
+                margin: EdgeInsets.only(left: 8, top: 78, right: 8),
                 child: Card(
                   elevation: 12,
                   shape: RoundedRectangleBorder(

@@ -2,7 +2,7 @@ import 'package:intl/intl.dart';
 
 import 'package:curbshop_mobile_customer/backend/models/CartProduct.dart';
 import 'package:curbshop_mobile_customer/themes/themeColors.dart';
-import 'package:curbshop_mobile_customer/widgets/incrementStepper.dart';
+import 'package:curbshop_mobile_customer/widgets/cartWidgets/incrementStepper.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

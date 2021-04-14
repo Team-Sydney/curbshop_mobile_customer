@@ -5,7 +5,7 @@ import 'package:curbshop_mobile_customer/controllers/customPanelController.dart'
 import 'package:curbshop_mobile_customer/pages/home.dart';
 import 'package:curbshop_mobile_customer/pages/login.dart';
 import 'package:curbshop_mobile_customer/themes/themeColors.dart';
-import 'package:curbshop_mobile_customer/widgets/cartPopup.dart';
+import 'package:curbshop_mobile_customer/widgets/cartWidgets/cartPopup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
